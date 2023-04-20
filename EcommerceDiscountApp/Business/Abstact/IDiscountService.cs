@@ -16,7 +16,6 @@ namespace Business.Abstact
         Task<IResult> DeleteDiscount(Discounts discounts);
         Task<IDataResult<Discounts>> GetAllDiscount();
         Task<IDataResult<IQueryable<Discounts>>> GetDiscountsByCategoryId(uint categoryId);
-        public Task ApplayDiscounts();
 
 
     }

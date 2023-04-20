@@ -58,38 +58,7 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
-        public async Task ApplayDiscounts()
-        {
-            var discounts = _readRepository.GetAll();
-            foreach (var discount in discounts)
-            {
-                var products = _productReadRepository.GetWhere(x => x.CategoryId == discount.CategoryId);
-                DateTime currentTime = DateTime.UtcNow;
-                if (discount.StartDate < currentTime && discount.EndDate > currentTime)
-                {
-                    discount.IsActive = true;
-                    await _writeRepository.SaveAsync();
-                    
-                    foreach (var product in products)
-                    {
-                        var discountprice = product.Price * discount.Rate;
-                        product.SellingPrice = product.Price+discountprice;
-                        await _productWriteRepository.SaveAsync();
-                    }
-                }
-                if (discount.EndDate < currentTime)
-                {
-                    discount.IsActive = false;
-                    await _writeRepository.SaveAsync();
-                    foreach(var product in products)
-                    {
-                        product.SellingPrice = product.Price;
-                        await _productWriteRepository.SaveAsync();
-                    }
-
-                }
-            }
-        }
+        
         
     }
 }
