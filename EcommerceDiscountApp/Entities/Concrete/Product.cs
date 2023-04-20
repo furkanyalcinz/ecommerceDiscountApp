@@ -11,9 +11,9 @@ namespace Entities.Concrete
     {
         public string ProductName { get; set; }
         public uint Stock { get; set; }
-        public uint Price { get; set; }
+        public double Price { get; set; }
         public uint CategoryId { get; set; }
-        public uint SellingPrice { get; set; }
+        public double SellingPrice { get; set; }
         
         public virtual Category Category { get; set; }
     }

@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class RepositoryRead<T> : IRepositoryRead<T> where T : BaseEntity
+    public class RepositoryRead<T> : IRepositoryRead<T>
+        where T : BaseEntity
+       
     {
         private readonly DiscountContext _context;
 
@@ -24,6 +26,7 @@ namespace DataAccess.Concrete
 
         public IQueryable<T> GetAll(bool tracking = true)
         {
+            
             var query = Table.AsQueryable();
             if (!tracking)
             {

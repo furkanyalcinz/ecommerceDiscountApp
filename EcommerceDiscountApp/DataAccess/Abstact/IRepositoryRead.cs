@@ -1,4 +1,5 @@
 ﻿using Entities.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstact
 {
-    public interface IRepositoryRead<T>:IRepository<T> where T : BaseEntity
+    public interface IRepositoryRead<TEntity> :IRepository<TEntity> where TEntity : BaseEntity
     {
-        IQueryable<T> GetAll(bool tracking = true);
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
-        Task<T> GetByIdAsync(uint id, bool tracking = true);
+        IQueryable<TEntity> GetAll(bool tracking = true);
+        IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> method, bool tracking = true);
+        Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> method, bool tracking = true);
+        Task<TEntity> GetByIdAsync(uint id, bool tracking = true);
     }
 }

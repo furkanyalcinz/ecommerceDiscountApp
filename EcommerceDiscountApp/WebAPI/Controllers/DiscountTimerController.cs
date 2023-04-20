@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Timers;
-using System.IO;
 using Timer = System.Timers.Timer;
+using Business.Abstact;
+using System.ComponentModel;
 
 namespace WebAPI.Controllers
 {
@@ -10,25 +11,24 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DiscountTimerController:ControllerBase
     {
-        string dosyaAdi = "ornek.txt";
-        string dosyaYolu = @"C:\Users\furka\Desktop\";
         private Timer _timer;
-        public DiscountTimerController()
+        private IDiscountService _discountService;
+
+        public DiscountTimerController(IDiscountService discountService)
         {
-            _timer = new Timer(TimeSpan.FromSeconds(2));
+            _discountService = discountService;
+            _timer = new Timer(TimeSpan.FromSeconds(60));
             _timer.Elapsed += TimerElapsed;
             _timer.Enabled = true;
-            _timer.AutoReset = true;
+            _timer.AutoReset = false;
+            _timer.Start();
             _timer.Start();
         }
-        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        private async void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            using (StreamWriter sw = new StreamWriter(dosyaYolu + dosyaAdi, true))
-            {
-                // Satırı dosyaya yazın
-                sw.WriteLine(DateTime.Now);
-            }
+            await _discountService.ApplayDiscounts();
         }
+       
 
         [HttpGet]
         public IActionResult StartTimer()

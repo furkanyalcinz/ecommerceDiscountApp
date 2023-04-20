@@ -9,7 +9,7 @@ using DataAccess.Concrete.ProductRepository;
 using DataAccess.Context;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 builder.Services.AddDbContext<DiscountContext>();
 builder.Services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
