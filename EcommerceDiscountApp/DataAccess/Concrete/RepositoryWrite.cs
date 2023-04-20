@@ -25,7 +25,9 @@ namespace DataAccess.Concrete
         public async Task<bool> AddAsync(T entity)
         {
             EntityEntry<T> entityEntry = await Table.AddAsync(entity);
-            return entityEntry.State == EntityState.Added;
+            var res = entityEntry.State == EntityState.Added;
+            await _context.SaveChangesAsync();
+            return res;
         }
 
         public async Task<bool> AddRangeAsync(List<T> entities)
@@ -54,8 +56,12 @@ namespace DataAccess.Concrete
 
         public bool Update(T entity)
         {
-            EntityEntry entityEntry = Table.Update(entity);
-            return entityEntry.State == EntityState.Modified;
+            var updatedEntity = _context.Entry(entity);
+            updatedEntity.State = EntityState.Modified;
+            var res = updatedEntity.State == EntityState.Modified;
+            _context.SaveChanges();
+
+            return res;
         }
         public async Task<int> SaveAsync()
         => await _context.SaveChangesAsync();

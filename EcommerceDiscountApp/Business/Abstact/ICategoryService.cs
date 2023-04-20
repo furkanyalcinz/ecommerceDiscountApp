@@ -11,10 +11,10 @@ namespace Business.Abstact
 {
     public interface ICategoryService
     {
-        IResult AddCategory(AddCategoryDTO categoryDTO);
-        IDataResult<List<Category>> GetAllCategories(Category categoryFilter);
-        IDataResult<Category> GetCategory(Category category);
-        IResult UpdateCategory(Category category);
-        IResult DeleteCategory(Category category);
+        Task<IResult> AddCategory(AddCategoryDTO categoryDTO);
+        Task<IDataResult<IQueryable<Category>>> GetAllCategories();
+        Task<IDataResult<Category>> GetCategoryById(uint category_id);
+        Task<IResult> UpdateCategory(Category category);
+        Task<IResult> DeleteCategory(Category category);
     }
 }

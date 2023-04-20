@@ -42,7 +42,7 @@ namespace DataAccess.Concrete
         }
 
 
-        public async Task<T> GetByIdAsync(int id, bool tracking = true)
+        public async Task<T> GetByIdAsync(uint id, bool tracking = true)
         //=> await Table.FirstOrDefaultAsync(e => e.Id.ToString() == id);
         {
             var query = Table.AsQueryable();
